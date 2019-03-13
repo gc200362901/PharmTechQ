@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void login(View view) {
         // instantiate new explicit intent
-        Intent intent = new Intent(getApplicationContext(), selectTopic.class);
+        Intent intent = new Intent(getApplicationContext(), TopicActivity.class);
 
         //validation here
 
