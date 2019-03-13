@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">PharmTechQ</string>
+    <string name="app_name">Pharm Tech Q</string>
+    <string name="img_description_logo">Pharm Tech Q</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="hint_firstName">First Name</string>
+    <string name="hint_lastName">Last Name</string>
+    <string name="title_topic">What Would you Like to Do today?</string>
 </resources>
