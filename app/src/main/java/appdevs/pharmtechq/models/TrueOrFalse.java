@@ -7,8 +7,8 @@ public class TrueOrFalse extends Question {
 
     public TrueOrFalse() {}
 
-    public TrueOrFalse(int questionId, String questionType, String question, String correctAnswer) {
-        super(questionId, questionType, question, correctAnswer);
+    public TrueOrFalse(int questionId, String questionType, String questionTopic, String question, String correctAnswer) {
+        super(questionId, questionType, questionTopic, question, correctAnswer);
         this.answerTrue = "True";
         this.answerFalse = "False";
     }
