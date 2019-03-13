@@ -1,5 +1,7 @@
 package appdevs.pharmtechq.models;
 
+import java.util.ArrayList;
+
 public class MultipleChoice extends Question {
 
     private String answerA;
@@ -9,9 +11,10 @@ public class MultipleChoice extends Question {
 
     public MultipleChoice() {}
 
-    public MultipleChoice(int questionId, String questionType, String questionTopic, String question, String correctAnswer,
+    public MultipleChoice(int questionId, String questionType, String questionTopic, String question,
+                          String explanation, ArrayList<String> references, String correctAnswer,
                           String answerA, String answerB, String answerC, String answerD) {
-        super(questionId, questionType, questionTopic, question, correctAnswer);
+        super(questionId, questionType, questionTopic, question, explanation, references, correctAnswer);
         this.answerA = answerA;
         this.answerB = answerB;
         this.answerC = answerC;
