@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "524867158374",
+    "firebase_url": "https://pharmtechq-211d8.firebaseio.com",
+    "project_id": "pharmtechq-211d8",
+    "storage_bucket": "pharmtechq-211d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:524867158374:android:4efcd42e62976e91",
+        "android_client_info": {
+          "package_name": "appdevs.pharmtechq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "524867158374-eo7svt5g74r2brjpfov4ihrqa0s1u0h8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "appdevs.pharmtechq",
+            "certificate_hash": "5fe3ad79294e15d65a085bf60c0ebc56a6d87063"
+          }
+        },
+        {
+          "client_id": "524867158374-sgrv9a60ivc0hnmo5cl9jp1fpei8k0k0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjkNPkQNr9vdfNHhDVPOW0bjL2BzQsSDA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "524867158374-sgrv9a60ivc0hnmo5cl9jp1fpei8k0k0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
