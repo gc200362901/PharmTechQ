@@ -72,6 +72,13 @@
             android:textColor="#FFFFFF"
             android:clickable="true"
             android:onClick="loginActivity"/>
+
+        <ProgressBar
+            android:id="@+id/progressBarRegister"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
