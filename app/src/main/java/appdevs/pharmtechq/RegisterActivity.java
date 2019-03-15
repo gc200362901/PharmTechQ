@@ -4,8 +4,21 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    FirebaseAuth authDb;
+    EditText editTextEmail;
+    EditText editTextPassword;
+    EditText edittextConfirmPassword;
+    Button buttonRegister;
+    //ProgressBar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,17 +26,19 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
     }
 
-    public void saveRegister(View view) {
+    public void registerUser(View view) {
         //validates
 
         //saves the values into database online
 
-        //sends back to login page
-        // instantiate new explicit intent
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
-        //start register activity
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
 
+    }
+
+    public void loginActivity(View view) {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 }

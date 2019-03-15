@@ -4,11 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".RegisterActivity">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,41 +23,28 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="100dp" />
+            android:layout_height="150dp" />
 
         <EditText
-            android:id="@+id/editTextFirstName"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:ems="10"
-            android:hint="@string/hint_firstName"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/editTextLastName"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:ems="10"
-            android:hint="@string/hint_lastName"
-            android:inputType="textPersonName" />
-
-        <EditText
+            style="@style/hintText"
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
+            android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress" />
 
         <EditText
+            style="@style/hintText"
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
+            android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/hint_password"
             android:inputType="textPassword" />
 
         <EditText
+            style="@style/hintText"
             android:id="@+id/editTextConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,11 +53,25 @@
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/button"
+            style="@style/textButton"
+            android:id="@+id/buttonRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="saveRegister"
-            android:text="@string/register_button" />
+            android:layout_margin="16dp"
+            android:onClick="registerUser"
+            android:text="@string/register_button"
+            android:background="@color/colorAccent"/>
+
+        <TextView
+            android:id="@+id/textViewAlreadyRegistered"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/text_view_already_registered"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:clickable="true"
+            android:onClick="loginActivity"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -41,6 +41,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         viewHolder.rootTopicItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO: Intent
                 Toast.makeText(context, "TODO: Intent", Toast.LENGTH_LONG).show();
             }
         });
