@@ -21,8 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth authDb;
     EditText editTextEmail;
     EditText editTextPassword;
-    EditText edittextConfirmPassword;
-    Button buttonRegister;
+    EditText editTextConfirmPassword;
     ProgressBar progressBarRegister;
 
     @Override
@@ -33,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
         authDb = FirebaseAuth.getInstance();
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
-        edittextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
+        editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
 
         progressBarRegister = findViewById(R.id.progressBarRegister);
         progressBarRegister.setVisibility(View.INVISIBLE);
@@ -42,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void registerUser(View view) {
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
-        String confirmPassword = edittextConfirmPassword.getText().toString();
+        String confirmPassword = editTextConfirmPassword.getText().toString();
 
         if(TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Please enter an email", Toast.LENGTH_LONG).show();

@@ -27,7 +27,7 @@
 
         <EditText
             style="@style/hintText"
-            android:id="@+id/emailEditText"
+            android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_email"
@@ -35,7 +35,7 @@
 
         <EditText
             style="@style/hintText"
-            android:id="@+id/passwordEditText"
+            android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_password"
@@ -43,7 +43,7 @@
 
         <Button
             style="@style/textButton"
-            android:id="@+id/loginButton"
+            android:id="@+id/buttonLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
