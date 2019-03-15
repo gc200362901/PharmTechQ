@@ -7,67 +7,38 @@
     tools:context=".TopicActivity">
 
     <LinearLayout
-        android:layout_width="395dp"
-        android:layout_height="587dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/background_light"
-            android:contentDescription="@string/imgDecriptionLogo"
-            app:srcCompat="@drawable/logoverticle2" />
-
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewTopic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/titleTopic"
+            android:text="@string/chosen_topic"
             android:textSize="24sp" />
 
-        <LinearLayout
+        <Button
+            android:id="@+id/quizButton"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="83dp"
+            android:text="@string/topic_take_quiz_button" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/learningHubButton"
+            android:layout_width="match_parent"
+            android:layout_height="83dp"
+            android:text="@string/topic_learning_hub_button" />
 
-            <Button
-                android:id="@+id/quizButton"
-                android:layout_width="match_parent"
-                android:layout_height="83dp"
-                android:text="@string/topic_take_quiz_button" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/learningHubButton"
-                android:layout_width="match_parent"
-                android:layout_height="83dp"
-                android:text="@string/topic_learning_hub_button" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/viewResourcesButton"
-                android:layout_width="match_parent"
-                android:layout_height="83dp"
-                android:text="@string/topic_resources_button" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/viewResourcesButton"
+            android:layout_width="match_parent"
+            android:layout_height="83dp"
+            android:text="@string/topic_resources_button" />
 
     </LinearLayout>
 

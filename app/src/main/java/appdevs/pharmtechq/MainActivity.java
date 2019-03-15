@@ -5,6 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+
+import appdevs.pharmtechq.models.Question;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -15,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void login(View view) {
         // instantiate new explicit intent
-        Intent intent = new Intent(getApplicationContext(), TopicActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SelectTopicActivity.class);
 
         //validation here
 

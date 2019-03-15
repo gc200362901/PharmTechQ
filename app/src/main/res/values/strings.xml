@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Pharm Tech Q</string>
     <string name="img_description_logo">Pharm Tech Q</string>
-    <string name="login">Login</string>
-    <string name="register">Register</string>
+    <string name="login_button">Login</string>
+    <string name="register_button">Register</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="hint_confirm_password">Confirm Password</string>
@@ -11,4 +11,6 @@
     <string name="topic_take_quiz_button">Take Quiz</string>
     <string name="topic_learning_hub_button">Learning Hub</string>
     <string name="topic_resources_button">Resources</string>
+    <string name="select_topic_label">Select A Topic</string>
+    <string name="chosen_topic">Chosen Topic Here</string>
 </resources>

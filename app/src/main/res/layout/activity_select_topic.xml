@@ -4,6 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rootRecyclerViewTopics"
     tools:context=".SelectTopicActivity">
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textViewSelectTopic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_topic_label" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewTopics"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
