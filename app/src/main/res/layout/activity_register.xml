@@ -60,7 +60,7 @@
             android:inputType="textPassword" />
 
         <Button
-            style="@style/textButton"
+            style="@style/textMedium"
             android:id="@+id/buttonRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

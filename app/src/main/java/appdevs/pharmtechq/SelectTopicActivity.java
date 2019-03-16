@@ -59,7 +59,6 @@ public class SelectTopicActivity extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 authDb.signOut();
-                //finish();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             default:
                 return super.onOptionsItemSelected(item);

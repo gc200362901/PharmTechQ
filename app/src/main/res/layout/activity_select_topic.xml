@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/textViewSelectTopic"
-            style="@style/textTitle"
+            style="@style/textTitlePrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
