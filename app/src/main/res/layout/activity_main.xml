@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -21,9 +20,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/imageViewLogo"
             android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:layout_height="172dp"
+            app:srcCompat="@drawable/logopharmtechq2" />
+        <TextView
+            android:id="@+id/textViewTitle"
+            style="@style/textTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/app_name" />
 
         <EditText
             style="@style/hintText"
@@ -49,7 +56,7 @@
             android:layout_margin="16dp"
             android:onClick="loginUser"
             android:text="@string/login_button"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorPrimary"/>
 
         <TextView
             android:id="@+id/textViewNotRegistered"
@@ -58,7 +65,7 @@
             android:layout_marginTop="32dp"
             android:text="@string/text_view_not_registered"
             android:gravity="center"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:clickable="true"
             android:onClick="registerActivity" />
 

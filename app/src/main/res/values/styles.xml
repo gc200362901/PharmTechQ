@@ -7,7 +7,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+    <style name="textTitle">
+        <item name="android:fontFamily">sans-serif-condensed-medium</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
     <style name="hintText">
         <item name="android:fontFamily">sans-serif-condensed-light</item>
         <item name="android:textSize">16sp</item>

@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
         progressBarLogin = findViewById(R.id.progressBarLogin);
         progressBarLogin.setVisibility(View.INVISIBLE);
 
-        if(authDb.getCurrentUser() != null) {
-            Intent intent = new Intent(getApplicationContext(), SelectTopicActivity.class);
-            startActivity(intent);
-        }
+//        if(authDb.getCurrentUser() != null) {
+//            Intent intent = new Intent(getApplicationContext(), SelectTopicActivity.class);
+//            startActivity(intent);
+//        }
 
     }
 
