@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Pharm Tech Q</string>
+    <string name="topics">Topics</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
     <string name="img_description_logo">Pharm Tech Q</string>
     <string name="login_button">Login</string>
     <string name="register_button">Register</string>
