@@ -11,16 +11,26 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import appdevs.pharmtechq.QuizActivity;
 import appdevs.pharmtechq.R;
 
 public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHolder> {
 
     private ArrayList<String> answers;
     private Context context;
+    private TextView textViewAnswerItem;
+    private boolean answerClickable = true;
 
-    public AnswersAdapter(Context context, ArrayList<String> answers) {
+    ConstraintLayout rootExplanationConstraint;
+    ConstraintLayout rootReferenceConstraint;
+
+
+    public AnswersAdapter(Context context, ArrayList<String> answers,
+                          ConstraintLayout rootExplanationConstraint, ConstraintLayout rootReferenceConstraint) {
         this.answers = answers;
         this.context = context;
+        this.rootExplanationConstraint = rootExplanationConstraint;
+        this.rootReferenceConstraint = rootReferenceConstraint;
     }
 
     @NonNull
@@ -38,7 +48,24 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
         viewHolder.rootAnswerItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: change answer color green or red
+                textViewAnswerItem = v.findViewById(R.id.textViewAnswerItem);
+                String selectedAnswer = textViewAnswerItem.getText().toString();
+
+                if(answerClickable) {
+                    if (QuizActivity.quizQuestions.get(QuizActivity.quizQuestionCount).getCorrectAnswer().equals(selectedAnswer)) {
+                        textViewAnswerItem.setBackgroundResource(R.color.correctAnswerButton);
+                        answerClickable = false;
+
+                        rootExplanationConstraint.setVisibility(View.VISIBLE);
+                        rootReferenceConstraint.setVisibility(View.VISIBLE);
+                    } else {
+                        textViewAnswerItem.setBackgroundResource(R.color.wrongAnswerButton);
+                        answerClickable = false;
+
+                        rootExplanationConstraint.setVisibility(View.VISIBLE);
+                        rootReferenceConstraint.setVisibility(View.VISIBLE);
+                    }
+                }
                 //TODO: load/show explanation and references
                 //TODO: display next button
                 //TODO: update progressbar

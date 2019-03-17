@@ -2,6 +2,7 @@ package appdevs.pharmtechq;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,12 +30,12 @@ public class QuizActivity extends AppCompatActivity {
     private Toolbar toolBar;
     private FirebaseAuth authDb;
     private DatabaseReference db;
-    private ArrayList<Question> questions;
-    private String topic;
-    private int questionCount;
+    public static ArrayList<Question> quizQuestions;
+    public static int quizQuestionCount;
+    public static String quizTopic;
     private TextView textViewQuestion;
-
-    private static final String TAG = "QuizActivity";
+    ConstraintLayout rootExplanationConstraint;
+    ConstraintLayout rootReferenceConstraint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +43,8 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        questions = new ArrayList<>();
-        questionCount = 0;
+        quizQuestions = new ArrayList<>();
+        quizQuestionCount = 0;
         //database
         authDb = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance().getReference("questions");
@@ -51,6 +53,11 @@ public class QuizActivity extends AppCompatActivity {
         setSupportActionBar(toolBar);
         //views
         textViewQuestion = findViewById(R.id.textViewQuestion);
+        rootExplanationConstraint = findViewById(R.id.rootExplanationConstraint);
+        rootReferenceConstraint = findViewById(R.id.rootReferencesConstraint);
+
+        rootExplanationConstraint.setVisibility(View.INVISIBLE);
+        rootReferenceConstraint.setVisibility(View.INVISIBLE);
 
         getTopicQuestion();
     }
@@ -81,26 +88,25 @@ public class QuizActivity extends AppCompatActivity {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //user's first question on this activity comming for topics activity
-                if(questions.size() == 0) {
+                //user's first question on this activity coming for topics activity
+                if(quizQuestions.size() == 0) {
                     ArrayList<Question> tmpQuestions = new ArrayList<>();
                     Intent intent = getIntent();
-                    topic = intent.getStringExtra("TOPIC");
+                    quizTopic = intent.getStringExtra("TOPIC");
                     for (DataSnapshot postSnapShot : dataSnapshot.getChildren()) {
                         Question question = postSnapShot.getValue(Question.class);
                         tmpQuestions.add(question);
                     }
                     for (int i = 0; i < tmpQuestions.size(); i++) {
-                        if (tmpQuestions.get(i).getQuestionTopic().equals(topic)) {
-                            questions.add(tmpQuestions.get(i));
+                        if (tmpQuestions.get(i).getQuestionTopic().equals(quizTopic)) {
+                            quizQuestions.add(tmpQuestions.get(i));
                         }
                     }
                     //populate question
-                    String currentQuestion = questions.get(questionCount).getQuestion();
+                    String currentQuestion = quizQuestions.get(quizQuestionCount).getQuestion();
                     textViewQuestion.setText(currentQuestion);
                     //populate answers
-                    ArrayList<String> answers = new ArrayList<>();
-                    answers.addAll(questions.get(questionCount).getAnswers());
+                    ArrayList<String> answers = new ArrayList<>(quizQuestions.get(quizQuestionCount).getAnswers());
                     initRecyclerViewAnswers(answers);
                 }
             }
@@ -113,9 +119,8 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void initRecyclerViewAnswers(ArrayList<String> answers) {
-
         RecyclerView recyclerView = findViewById(R.id.recyclerViewAnswers);
-        AnswersAdapter answersAdapter = new AnswersAdapter(this, answers);
+        AnswersAdapter answersAdapter = new AnswersAdapter(this, answers, rootExplanationConstraint, rootReferenceConstraint);
         recyclerView.setAdapter(answersAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

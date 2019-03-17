@@ -18,4 +18,7 @@
     <string name="text_view_not_registered">Not a member? Sign up now </string>
     <string name="select_topic_label">Select A Topic</string>
     <string name="chosen_topic">Chosen Topic Here</string>
+    <string name="explanation_label">Explanation</string>
+    <string name="reference_label">References</string>
+    <string name="next_button">Next</string>
 </resources>
