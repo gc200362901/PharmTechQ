@@ -56,7 +56,7 @@
             android:layout_margin="16dp"
             android:onClick="loginUser"
             android:text="@string/login_button"
-            android:background="@color/colorPrimary"/>
+            android:background="@color/colorPrimaryLight"/>
 
         <TextView
             android:id="@+id/textViewNotRegistered"

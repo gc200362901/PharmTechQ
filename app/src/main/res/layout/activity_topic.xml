@@ -6,38 +6,66 @@
     android:layout_height="match_parent"
     tools:context=".TopicActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/Base.ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    </android.support.v7.widget.Toolbar>
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolBar">
 
         <TextView
+            style="@style/textTitlePrimary"
             android:id="@+id/textViewTopic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/chosen_topic"
             android:textSize="24sp" />
 
         <Button
+            style="@style/textMedium"
             android:id="@+id/quizButton"
             android:layout_width="match_parent"
-            android:layout_height="83dp"
-            android:text="@string/topic_take_quiz_button" />
+            android:layout_height="78dp"
+            android:layout_margin="8dp"
+            android:background="@color/colorPrimaryLight"
+            android:text="@string/topic_take_quiz_button"
+            android:onClick="quizButton" />
 
         <Button
+            style="@style/textMedium"
             android:id="@+id/learningHubButton"
             android:layout_width="match_parent"
-            android:layout_height="83dp"
+            android:layout_height="78dp"
+            android:layout_margin="8dp"
+            android:background="@color/colorPrimaryLight"
             android:text="@string/topic_learning_hub_button" />
 
         <Button
+            style="@style/textMedium"
             android:id="@+id/viewResourcesButton"
             android:layout_width="match_parent"
-            android:layout_height="83dp"
+            android:layout_height="78dp"
+            android:layout_margin="8dp"
+            android:background="@color/colorPrimaryLight"
             android:text="@string/topic_resources_button" />
 
     </LinearLayout>

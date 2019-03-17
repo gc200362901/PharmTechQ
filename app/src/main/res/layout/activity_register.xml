@@ -67,7 +67,7 @@
             android:layout_margin="16dp"
             android:onClick="registerUser"
             android:text="@string/register_button"
-            android:background="@color/colorPrimary"/>
+            android:background="@color/colorPrimaryLight"/>
 
         <TextView
             android:id="@+id/textViewAlreadyRegistered"

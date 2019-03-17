@@ -1,6 +1,7 @@
 package appdevs.pharmtechq.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -8,11 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import appdevs.pharmtechq.R;
+import appdevs.pharmtechq.TopicActivity;
 
 public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder>{
 
@@ -41,8 +42,9 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         viewHolder.rootTopicItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Intent
-                Toast.makeText(context, "TODO: Intent", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(v.getContext(), TopicActivity.class);
+                intent.putExtra("TOPIC", topics.get(i));
+                v.getContext().startActivity(intent);
             }
         });
     }
