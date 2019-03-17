@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import appdevs.pharmtechq.adapters.AnswersAdapter;
+import appdevs.pharmtechq.adapters.ReferencesAdapter;
 import appdevs.pharmtechq.models.Question;
 
 public class QuizActivity extends AppCompatActivity {
@@ -36,6 +37,9 @@ public class QuizActivity extends AppCompatActivity {
     private TextView textViewQuestion;
     ConstraintLayout rootExplanationConstraint;
     ConstraintLayout rootReferenceConstraint;
+    public TextView textViewExplanation;
+    public TextView textViewRefInfo;
+    public RecyclerView recyclerViewReferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +59,15 @@ public class QuizActivity extends AppCompatActivity {
         textViewQuestion = findViewById(R.id.textViewQuestion);
         rootExplanationConstraint = findViewById(R.id.rootExplanationConstraint);
         rootReferenceConstraint = findViewById(R.id.rootReferencesConstraint);
+        textViewExplanation = findViewById(R.id.textViewExplanation);
+        textViewRefInfo = findViewById(R.id.textViewRefInfo);
+        recyclerViewReferences = findViewById(R.id.recyclerViewReferences);
 
-        rootExplanationConstraint.setVisibility(View.INVISIBLE);
-        rootReferenceConstraint.setVisibility(View.INVISIBLE);
+        //remove views until user clicks making them appear
+        rootExplanationConstraint.setVisibility(View.GONE);
+        rootReferenceConstraint.setVisibility(View.GONE);
+        textViewExplanation.setVisibility(View.GONE);
+        recyclerViewReferences.setVisibility(View.GONE);
 
         getTopicQuestion();
     }
@@ -108,6 +118,9 @@ public class QuizActivity extends AppCompatActivity {
                     //populate answers
                     ArrayList<String> answers = new ArrayList<>(quizQuestions.get(quizQuestionCount).getAnswers());
                     initRecyclerViewAnswers(answers);
+                    //populate references
+                    ArrayList<String> references = new ArrayList<>(quizQuestions.get(quizQuestionCount).getReferences());
+                    initRecyclerViewReferences(references);
                 }
             }
 
@@ -120,8 +133,16 @@ public class QuizActivity extends AppCompatActivity {
 
     private void initRecyclerViewAnswers(ArrayList<String> answers) {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewAnswers);
-        AnswersAdapter answersAdapter = new AnswersAdapter(this, answers, rootExplanationConstraint, rootReferenceConstraint);
+        AnswersAdapter answersAdapter = new AnswersAdapter(this, answers, rootExplanationConstraint,
+                rootReferenceConstraint, textViewExplanation, textViewRefInfo, recyclerViewReferences);
         recyclerView.setAdapter(answersAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void initRecyclerViewReferences(ArrayList<String> references) {
+        RecyclerView recyclerViewReferences = findViewById(R.id.recyclerViewReferences);
+        ReferencesAdapter referencesAdapter = new ReferencesAdapter(this, references);
+        recyclerViewReferences.setAdapter(referencesAdapter);
+        recyclerViewReferences.setLayoutManager(new LinearLayoutManager(this));
     }
 }

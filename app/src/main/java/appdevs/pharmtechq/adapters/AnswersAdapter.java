@@ -20,17 +20,26 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
     private Context context;
     private TextView textViewAnswerItem;
     private boolean answerClickable = true;
-
-    ConstraintLayout rootExplanationConstraint;
-    ConstraintLayout rootReferenceConstraint;
-
+    private boolean explanationShow = true;
+    private boolean referencesShow = true;
+    private ConstraintLayout rootExplanationConstraint;
+    private ConstraintLayout rootReferenceConstraint;
+    private TextView textViewExplanation;
+    private TextView textViewRefInfo;
+    private RecyclerView recyclerViewReferences;
 
     public AnswersAdapter(Context context, ArrayList<String> answers,
-                          ConstraintLayout rootExplanationConstraint, ConstraintLayout rootReferenceConstraint) {
+                          ConstraintLayout rootExplanationConstraint,
+                          ConstraintLayout rootReferenceConstraint,
+                          TextView textViewExplanation, TextView textViewRefInfo,
+                          RecyclerView recyclerViewReferences) {
         this.answers = answers;
         this.context = context;
         this.rootExplanationConstraint = rootExplanationConstraint;
         this.rootReferenceConstraint = rootReferenceConstraint;
+        this.textViewExplanation = textViewExplanation;
+        this.textViewRefInfo = textViewRefInfo;
+        this.recyclerViewReferences = recyclerViewReferences;
     }
 
     @NonNull
@@ -45,29 +54,73 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
     public void onBindViewHolder(@NonNull AnswersAdapter.ViewHolder viewHolder, int i) {
         viewHolder.textViewAnswerItem.setText(answers.get(i));
 
+        //onclick listener for answer buttons
         viewHolder.rootAnswerItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 textViewAnswerItem = v.findViewById(R.id.textViewAnswerItem);
                 String selectedAnswer = textViewAnswerItem.getText().toString();
 
+                //checks if an answer has been clicked already to avoid multiple attempts
                 if(answerClickable) {
-                    if (QuizActivity.quizQuestions.get(QuizActivity.quizQuestionCount).getCorrectAnswer().equals(selectedAnswer)) {
+                    //checks to see if the answer selected is corrected and
+                    // if so, changed background to green
+                    if (QuizActivity.quizQuestions.get(QuizActivity.quizQuestionCount)
+                            .getCorrectAnswer().equals(selectedAnswer)) {
                         textViewAnswerItem.setBackgroundResource(R.color.correctAnswerButton);
                         answerClickable = false;
 
                         rootExplanationConstraint.setVisibility(View.VISIBLE);
                         rootReferenceConstraint.setVisibility(View.VISIBLE);
+                    //answer selected was wrong and changes background to red
                     } else {
                         textViewAnswerItem.setBackgroundResource(R.color.wrongAnswerButton);
                         answerClickable = false;
 
+                        //makes the explanation and reference labels visible
                         rootExplanationConstraint.setVisibility(View.VISIBLE);
                         rootReferenceConstraint.setVisibility(View.VISIBLE);
+
+                        //onlick listener for the explanation label
+                        //displays explanation for question if label is clicked
+                        rootExplanationConstraint.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String currentExplanation = QuizActivity.quizQuestions
+                                        .get(QuizActivity.quizQuestionCount).getExplanation();
+                                textViewExplanation.setText(currentExplanation);
+
+                                if(explanationShow) {
+                                    textViewExplanation.setVisibility(View.VISIBLE);
+                                    explanationShow = false;
+                                }
+                                else {
+                                    textViewExplanation.setVisibility(View.GONE);
+                                    explanationShow = true;
+                                }
+                            }
+                        });
+
+                        //onclick listener for the resources label
+                        //displays references for question if the label is clicked
+                        rootReferenceConstraint.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if(referencesShow) {
+                                    recyclerViewReferences.setVisibility(View.VISIBLE);
+                                    referencesShow = false;
+                                }
+                                else {
+                                    recyclerViewReferences.setVisibility(View.GONE);
+                                    referencesShow = true;
+                                }
+                            }
+                        });
+
+
                     }
                 }
-                //TODO: load/show explanation and references
-                //TODO: display next button
                 //TODO: update progressbar
                 //TODO: call onClick for next button to change activity
             }
@@ -90,4 +143,5 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
             rootAnswerItem = itemView.findViewById(R.id.rootAnswerItem);
         }
     }
+
 }

@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 //            Intent intent = new Intent(getApplicationContext(), SelectTopicActivity.class);
 //            startActivity(intent);
 //        }
-
     }
 
     public void loginUser(View view) {
