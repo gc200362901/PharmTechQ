@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,11 +37,13 @@ public class QuizActivity extends AppCompatActivity {
     public static int quizQuestionCount;
     public static String quizTopic;
     private TextView textViewQuestion;
-    ConstraintLayout rootExplanationConstraint;
-    ConstraintLayout rootReferenceConstraint;
-    public TextView textViewExplanation;
-    public TextView textViewRefInfo;
-    public RecyclerView recyclerViewReferences;
+    private ConstraintLayout rootExplanationConstraint;
+    private ConstraintLayout rootReferenceConstraint;
+    private TextView textViewExplanation;
+    private TextView textViewRefInfo;
+    private RecyclerView recyclerViewReferences;
+    private Button buttonNext;
+    private ProgressBar progressBarQuiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,6 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         quizQuestions = new ArrayList<>();
-        quizQuestionCount = 0;
         //database
         authDb = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance().getReference("questions");
@@ -62,6 +65,8 @@ public class QuizActivity extends AppCompatActivity {
         textViewExplanation = findViewById(R.id.textViewExplanation);
         textViewRefInfo = findViewById(R.id.textViewRefInfo);
         recyclerViewReferences = findViewById(R.id.recyclerViewReferences);
+        buttonNext = findViewById(R.id.buttonNext);
+        progressBarQuiz = findViewById(R.id.progressBarQuiz);
 
         //remove views until user clicks making them appear
         rootExplanationConstraint.setVisibility(View.GONE);
@@ -98,30 +103,54 @@ public class QuizActivity extends AppCompatActivity {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //user's first question on this activity coming for topics activity
-                if(quizQuestions.size() == 0) {
-                    ArrayList<Question> tmpQuestions = new ArrayList<>();
-                    Intent intent = getIntent();
-                    quizTopic = intent.getStringExtra("TOPIC");
-                    for (DataSnapshot postSnapShot : dataSnapshot.getChildren()) {
-                        Question question = postSnapShot.getValue(Question.class);
-                        tmpQuestions.add(question);
+
+                Intent intent = getIntent();
+                quizTopic = intent.getStringExtra("TOPIC");
+
+                ArrayList<Question> tmpQuestions = new ArrayList<>();
+                for (DataSnapshot postSnapShot : dataSnapshot.getChildren()) {
+                    Question question = postSnapShot.getValue(Question.class);
+                    tmpQuestions.add(question);
+                }
+                for (int i = 0; i < tmpQuestions.size(); i++) {
+                    if (tmpQuestions.get(i).getQuestionTopic().equals(quizTopic)) {
+                        quizQuestions.add(tmpQuestions.get(i));
                     }
-                    for (int i = 0; i < tmpQuestions.size(); i++) {
-                        if (tmpQuestions.get(i).getQuestionTopic().equals(quizTopic)) {
-                            quizQuestions.add(tmpQuestions.get(i));
+                }
+
+                final int PROGRESS_BAR_INCREMENT = (int) Math.ceil(100.0 / quizQuestions.size());
+
+                //populate question
+                String currentQuestion = quizQuestions.get(quizQuestionCount).getQuestion();
+                textViewQuestion.setText(currentQuestion);
+                //populate answers
+                ArrayList<String> answers = new ArrayList<>(quizQuestions.get(quizQuestionCount).getAnswers());
+                initRecyclerViewAnswers(answers);
+                //populate references
+                ArrayList<String> references = new ArrayList<>(quizQuestions.get(quizQuestionCount).getReferences());
+                initRecyclerViewReferences(references);
+
+                buttonNext.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        quizQuestionCount += 1;
+                        progressBarQuiz.incrementProgressBy(PROGRESS_BAR_INCREMENT);
+                        if(quizQuestionCount < quizQuestions.size()) {
+                            //populate question
+                            String currentQuestion = quizQuestions.get(quizQuestionCount).getQuestion();
+                            textViewQuestion.setText(currentQuestion);
+                            //populate answers
+                            ArrayList<String> answers = new ArrayList<>(quizQuestions.get(quizQuestionCount).getAnswers());
+                            initRecyclerViewAnswers(answers);
+                            //populate references
+                            ArrayList<String> references = new ArrayList<>(quizQuestions.get(quizQuestionCount).getReferences());
+                            initRecyclerViewReferences(references);
+                        }
+                        else {
+                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         }
                     }
-                    //populate question
-                    String currentQuestion = quizQuestions.get(quizQuestionCount).getQuestion();
-                    textViewQuestion.setText(currentQuestion);
-                    //populate answers
-                    ArrayList<String> answers = new ArrayList<>(quizQuestions.get(quizQuestionCount).getAnswers());
-                    initRecyclerViewAnswers(answers);
-                    //populate references
-                    ArrayList<String> references = new ArrayList<>(quizQuestions.get(quizQuestionCount).getReferences());
-                    initRecyclerViewReferences(references);
-                }
+                });
             }
 
             @Override
@@ -134,7 +163,8 @@ public class QuizActivity extends AppCompatActivity {
     private void initRecyclerViewAnswers(ArrayList<String> answers) {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewAnswers);
         AnswersAdapter answersAdapter = new AnswersAdapter(this, answers, rootExplanationConstraint,
-                rootReferenceConstraint, textViewExplanation, textViewRefInfo, recyclerViewReferences);
+                rootReferenceConstraint, textViewExplanation, textViewRefInfo, recyclerViewReferences,
+                buttonNext);
         recyclerView.setAdapter(answersAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

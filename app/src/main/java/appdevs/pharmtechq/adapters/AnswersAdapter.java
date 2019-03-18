@@ -1,12 +1,14 @@
 package appdevs.pharmtechq.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,12 +29,13 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
     private TextView textViewExplanation;
     private TextView textViewRefInfo;
     private RecyclerView recyclerViewReferences;
+    private Button buttonNext;
 
     public AnswersAdapter(Context context, ArrayList<String> answers,
                           ConstraintLayout rootExplanationConstraint,
                           ConstraintLayout rootReferenceConstraint,
                           TextView textViewExplanation, TextView textViewRefInfo,
-                          RecyclerView recyclerViewReferences) {
+                          RecyclerView recyclerViewReferences, Button buttonNext) {
         this.answers = answers;
         this.context = context;
         this.rootExplanationConstraint = rootExplanationConstraint;
@@ -40,6 +43,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
         this.textViewExplanation = textViewExplanation;
         this.textViewRefInfo = textViewRefInfo;
         this.recyclerViewReferences = recyclerViewReferences;
+        this.buttonNext = buttonNext;
     }
 
     @NonNull
@@ -53,7 +57,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull AnswersAdapter.ViewHolder viewHolder, int i) {
         viewHolder.textViewAnswerItem.setText(answers.get(i));
-
+        buttonNext.setEnabled(false);
         //onclick listener for answer buttons
         viewHolder.rootAnswerItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,13 +73,16 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
                             .getCorrectAnswer().equals(selectedAnswer)) {
                         textViewAnswerItem.setBackgroundResource(R.color.correctAnswerButton);
                         answerClickable = false;
+                        buttonNext.setEnabled(true);
 
+                        //makes the explanation and reference labels visible
                         rootExplanationConstraint.setVisibility(View.VISIBLE);
                         rootReferenceConstraint.setVisibility(View.VISIBLE);
                     //answer selected was wrong and changes background to red
                     } else {
                         textViewAnswerItem.setBackgroundResource(R.color.wrongAnswerButton);
                         answerClickable = false;
+                        buttonNext.setEnabled(true);
 
                         //makes the explanation and reference labels visible
                         rootExplanationConstraint.setVisibility(View.VISIBLE);
@@ -117,11 +124,9 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
                                 }
                             }
                         });
-
-
                     }
                 }
-                //TODO: update progressbar
+                //TODO: progressbar
                 //TODO: call onClick for next button to change activity
             }
         });
