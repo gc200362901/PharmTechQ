@@ -44,6 +44,17 @@ public class SelectTopicActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onStart() {
+
+        super.onStart();
+
+        if(authDb.getCurrentUser() == null) {
+            finish();
+            startActivity(new Intent(this, MainActivity.class));
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
@@ -74,7 +85,7 @@ public class SelectTopicActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance().getReference("questions");
         tmpTopics = new HashSet<>();
 
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 

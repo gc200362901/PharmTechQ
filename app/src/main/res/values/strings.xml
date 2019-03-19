@@ -9,8 +9,7 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="hint_confirm_password">Confirm Password</string>
-    <string name="hint_firstName">First Name</string>
-    <string name="hint_lastName">Last Name</string>
+    <string name="hint_name">Name</string>
     <string name="topic_take_quiz_button">Take Quiz</string>
     <string name="topic_learning_hub_button">Learning Hub</string>
     <string name="topic_resources_button">Resources</string>
@@ -21,4 +20,9 @@
     <string name="explanation_label">Explanation</string>
     <string name="reference_label">Resources</string>
     <string name="next_button">Next</string>
+    <string name="profile_welcome_label">Welcome</string>
+    <string name="latest_progress_label">Latest Progress</string>
+    <string name="summary_progress_label">Summary Progress</string>
+    <string name="latest_progress_topic">Topic</string>
+    <string name="latest_progress_result">Result %</string>
 </resources>

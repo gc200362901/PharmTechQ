@@ -1,18 +1,50 @@
 package appdevs.pharmtechq;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+import appdevs.pharmtechq.adapters.QuizScoresAdapter;
+import appdevs.pharmtechq.adapters.ReferencesAdapter;
+import appdevs.pharmtechq.models.QuizScore;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    Toolbar toolBar;
-    FirebaseAuth authDb;
+    private Toolbar toolBar;
+    private FirebaseAuth authDb;
+    private DatabaseReference db;
+    private ArrayList<QuizScore> quizScores;
+    private String currentUserId;
+    private String latestQuizTopic;
+    private int latestCorrectAttempts;
+    private int latestTotalAttempts;
+    private TextView textViewLatestTopic;
+    private TextView textViewLatestResult;
+    private float latestResultPercent;
+    private TextView textViewProfileWelcomeLabel;
+    private ArrayList<String> topics;
+    private ArrayList<String> results;
+
+    private static final String TAG = "ProfileActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +52,67 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         authDb = FirebaseAuth.getInstance();
+
+        if(authDb.getCurrentUser() != null) {
+            currentUserId = authDb.getCurrentUser().getUid();
+        }
+
+        db = FirebaseDatabase.getInstance().getReference("userScores").child(currentUserId);
         toolBar = findViewById(R.id.toolBar);
         setSupportActionBar(toolBar);
+        textViewLatestTopic = findViewById(R.id.textViewLatestTopic);
+        textViewLatestResult = findViewById(R.id.textViewLatestResult);
+        textViewProfileWelcomeLabel = findViewById(R.id.textViewProfileWelcomeLabel);
+        quizScores = new ArrayList<>();
+        topics = new ArrayList<>();
+        results = new ArrayList<>();
+
+        Intent intent = getIntent();
+        latestQuizTopic = intent.getStringExtra("TOPIC");
+        latestCorrectAttempts = intent.getIntExtra("CORRECT_ATTEMPTS", 0);
+        latestTotalAttempts = intent.getIntExtra("TOTAL_ATTEMPTS", 0);
+
+        populateWelcomeLabel();
+        populateLatestAttempt();
+
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                quizScores.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    QuizScore quizScore = snapshot.getValue(QuizScore.class);
+                    quizScores.add(quizScore);
+                }
+
+                addCurrentQuizScore();
+
+                for(QuizScore qs : quizScores) {
+                    topics.add(qs.getQuizScoreTopic());
+
+                    int correctAttempts = qs.getQuizScoreCorrectAttempts();
+                    int totalAttempts = qs.getQuizScoreTotalAttempts();
+                    float resultPercent = Math.round(((float)correctAttempts / totalAttempts) * 100);
+                    String quizResult = resultPercent + "%";
+                    results.add(quizResult);
+                }
+
+                initQuizScoresAdapter(topics, results);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(authDb.getCurrentUser() == null) {
+            finish();
+            startActivity(new Intent(this, MainActivity.class));
+        }
     }
 
     @Override
@@ -45,4 +136,65 @@ public class ProfileActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private void populateWelcomeLabel() {
+        String welcome = "Welcome, " + authDb.getCurrentUser().getDisplayName();
+        textViewProfileWelcomeLabel.setText(welcome);
+    }
+
+    private void addCurrentQuizScore() {
+        // check if there is already a topic present in database
+        // if there is, add results from last quiz to total stored in database
+        // and then update
+        boolean newEntry = true;
+        for(QuizScore q : quizScores) {
+            if(q.getQuizScoreTopic().equals(latestQuizTopic)) {
+                int previousCorrectAttempts = q.getQuizScoreCorrectAttempts();
+                int previousTotalAttempts = q.getQuizScoreTotalAttempts();
+                previousTotalAttempts += latestTotalAttempts;
+                previousCorrectAttempts += latestCorrectAttempts;
+
+                db.child(q.getQuizScoreId()).child("quizScoreCorrectAttempts").setValue(previousCorrectAttempts);
+                db.child(q.getQuizScoreId()).child("quizScoreTotalAttempts").setValue(previousTotalAttempts);
+
+                newEntry = false;
+
+            }
+        }
+        if(newEntry) {
+            String quizScoreId = db.push().getKey();
+            QuizScore quizScore = new QuizScore(quizScoreId, latestQuizTopic,
+                    latestCorrectAttempts, latestTotalAttempts);
+            if(quizScoreId != null) {
+                db.child(quizScoreId).setValue(quizScore);
+            }
+        }
+    }
+
+    private void populateLatestAttempt() {
+        textViewLatestTopic.setText(latestQuizTopic);
+
+        latestResultPercent = Math.round(((float)latestCorrectAttempts / latestTotalAttempts) * 100);
+
+        String latestResult = latestResultPercent + "%";
+
+        if(latestResultPercent < 49) {
+            textViewLatestResult.setTextColor(this.getResources().getColor(R.color.under_50_percent));
+        }
+        else if (latestResultPercent >= 50 && latestResultPercent < 79) {
+            textViewLatestResult.setTextColor(this.getResources().getColor(R.color.under_80_percent));
+        }
+        else {
+            textViewLatestResult.setTextColor(this.getResources().getColor(R.color.under_100_percent));
+        }
+        textViewLatestResult.setText(latestResult);
+    }
+
+    private void initQuizScoresAdapter(ArrayList<String> topics, ArrayList<String> results) {
+        RecyclerView recyclerViewQuizScores = findViewById(R.id.recyclerViewQuizScores);
+        QuizScoresAdapter quizScoresAdapter = new QuizScoresAdapter(this, topics, results);
+        recyclerViewQuizScores.setAdapter(quizScoresAdapter);
+        recyclerViewQuizScores.setLayoutManager(new LinearLayoutManager(this));
+    }
 }
+

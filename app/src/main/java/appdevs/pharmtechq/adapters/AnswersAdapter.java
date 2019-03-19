@@ -1,7 +1,6 @@
 package appdevs.pharmtechq.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,22 +27,23 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
     private ConstraintLayout rootExplanationConstraint;
     private ConstraintLayout rootReferenceConstraint;
     private TextView textViewExplanation;
-    private TextView textViewRefInfo;
     private RecyclerView recyclerViewReferences;
+    private ProgressBar progressBarQuiz;
     private Button buttonNext;
+    final int PROGRESS_BAR_INCREMENT = (int) Math.ceil(100.0 / QuizActivity.quizQuestions.size());
 
     public AnswersAdapter(Context context, ArrayList<String> answers,
                           ConstraintLayout rootExplanationConstraint,
                           ConstraintLayout rootReferenceConstraint,
-                          TextView textViewExplanation, TextView textViewRefInfo,
-                          RecyclerView recyclerViewReferences, Button buttonNext) {
+                          TextView textViewExplanation, RecyclerView recyclerViewReferences,
+                          ProgressBar progressBarQuiz, Button buttonNext) {
         this.answers = answers;
         this.context = context;
         this.rootExplanationConstraint = rootExplanationConstraint;
         this.rootReferenceConstraint = rootReferenceConstraint;
         this.textViewExplanation = textViewExplanation;
-        this.textViewRefInfo = textViewRefInfo;
         this.recyclerViewReferences = recyclerViewReferences;
+        this.progressBarQuiz = progressBarQuiz;
         this.buttonNext = buttonNext;
     }
 
@@ -69,26 +70,35 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
                 if(answerClickable) {
                     //checks to see if the answer selected is corrected and
                     // if so, changed background to green
+                    //increases totalAttempts and correctAttempts counter by 1
+                    //enables next button
                     if (QuizActivity.quizQuestions.get(QuizActivity.quizQuestionCount)
                             .getCorrectAnswer().equals(selectedAnswer)) {
                         textViewAnswerItem.setBackgroundResource(R.color.correctAnswerButton);
+                        QuizActivity.correctAttempts =+ QuizActivity.correctAttempts + 1;
+                        QuizActivity.totalAttempts =+ QuizActivity.totalAttempts +1;
                         answerClickable = false;
+                        progressBarQuiz.incrementProgressBy(PROGRESS_BAR_INCREMENT);
                         buttonNext.setEnabled(true);
 
                         //makes the explanation and reference labels visible
                         rootExplanationConstraint.setVisibility(View.VISIBLE);
                         rootReferenceConstraint.setVisibility(View.VISIBLE);
                     //answer selected was wrong and changes background to red
+                    //increases totalAttempts counter by 1
+                    //enables next button
                     } else {
                         textViewAnswerItem.setBackgroundResource(R.color.wrongAnswerButton);
+                        QuizActivity.totalAttempts =+ QuizActivity.totalAttempts +1;
                         answerClickable = false;
+                        progressBarQuiz.incrementProgressBy(PROGRESS_BAR_INCREMENT);
                         buttonNext.setEnabled(true);
 
                         //makes the explanation and reference labels visible
                         rootExplanationConstraint.setVisibility(View.VISIBLE);
                         rootReferenceConstraint.setVisibility(View.VISIBLE);
 
-                        //onlick listener for the explanation label
+                        //onclick listener for the explanation label
                         //displays explanation for question if label is clicked
                         rootExplanationConstraint.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -126,8 +136,6 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
                         });
                     }
                 }
-                //TODO: progressbar
-                //TODO: call onClick for next button to change activity
             }
         });
     }

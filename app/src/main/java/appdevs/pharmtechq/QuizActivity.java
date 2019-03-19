@@ -7,9 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -30,12 +27,13 @@ import appdevs.pharmtechq.models.Question;
 
 public class QuizActivity extends AppCompatActivity {
 
-    private Toolbar toolBar;
     private FirebaseAuth authDb;
     private DatabaseReference db;
     public static ArrayList<Question> quizQuestions;
     public static int quizQuestionCount;
     public static String quizTopic;
+    public static int correctAttempts;
+    public static int totalAttempts ;
     private TextView textViewQuestion;
     private ConstraintLayout rootExplanationConstraint;
     private ConstraintLayout rootReferenceConstraint;
@@ -55,9 +53,6 @@ public class QuizActivity extends AppCompatActivity {
         //database
         authDb = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance().getReference("questions");
-        //actionbar menu
-        toolBar = findViewById(R.id.toolBar);
-        setSupportActionBar(toolBar);
         //views
         textViewQuestion = findViewById(R.id.textViewQuestion);
         rootExplanationConstraint = findViewById(R.id.rootExplanationConstraint);
@@ -78,24 +73,13 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
+    public void onStart() {
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.action_select_topics:
-                return true;
-            case R.id.action_profile:
-                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                return true;
-            case R.id.action_logout:
-                authDb.signOut();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            default:
-                return super.onOptionsItemSelected(item);
+        super.onStart();
+
+        if(authDb.getCurrentUser() == null) {
+            finish();
+            startActivity(new Intent(this, MainActivity.class));
         }
     }
 
@@ -106,19 +90,21 @@ public class QuizActivity extends AppCompatActivity {
 
                 Intent intent = getIntent();
                 quizTopic = intent.getStringExtra("TOPIC");
-
+                quizQuestions.clear();
+                quizQuestionCount = 0;
+                correctAttempts = 0;
+                totalAttempts = 0;
                 ArrayList<Question> tmpQuestions = new ArrayList<>();
                 for (DataSnapshot postSnapShot : dataSnapshot.getChildren()) {
                     Question question = postSnapShot.getValue(Question.class);
                     tmpQuestions.add(question);
                 }
+                //get questions for chosen topic from question bank
                 for (int i = 0; i < tmpQuestions.size(); i++) {
                     if (tmpQuestions.get(i).getQuestionTopic().equals(quizTopic)) {
                         quizQuestions.add(tmpQuestions.get(i));
                     }
                 }
-
-                final int PROGRESS_BAR_INCREMENT = (int) Math.ceil(100.0 / quizQuestions.size());
 
                 //populate question
                 String currentQuestion = quizQuestions.get(quizQuestionCount).getQuestion();
@@ -134,7 +120,6 @@ public class QuizActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         quizQuestionCount += 1;
-                        progressBarQuiz.incrementProgressBy(PROGRESS_BAR_INCREMENT);
                         if(quizQuestionCount < quizQuestions.size()) {
                             //populate question
                             String currentQuestion = quizQuestions.get(quizQuestionCount).getQuestion();
@@ -147,7 +132,11 @@ public class QuizActivity extends AppCompatActivity {
                             initRecyclerViewReferences(references);
                         }
                         else {
-                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                            Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                            intent.putExtra("TOPIC", quizTopic);
+                            intent.putExtra("CORRECT_ATTEMPTS", correctAttempts);
+                            intent.putExtra("TOTAL_ATTEMPTS", totalAttempts);
+                            startActivity(intent);
                         }
                     }
                 });
@@ -163,8 +152,7 @@ public class QuizActivity extends AppCompatActivity {
     private void initRecyclerViewAnswers(ArrayList<String> answers) {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewAnswers);
         AnswersAdapter answersAdapter = new AnswersAdapter(this, answers, rootExplanationConstraint,
-                rootReferenceConstraint, textViewExplanation, textViewRefInfo, recyclerViewReferences,
-                buttonNext);
+                rootReferenceConstraint, textViewExplanation, recyclerViewReferences, progressBarQuiz, buttonNext);
         recyclerView.setAdapter(answersAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

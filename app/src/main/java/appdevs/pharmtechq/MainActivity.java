@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
         progressBarLogin = findViewById(R.id.progressBarLogin);
         progressBarLogin.setVisibility(View.INVISIBLE);
 
-//        if(authDb.getCurrentUser() != null) {
-//            Intent intent = new Intent(getApplicationContext(), SelectTopicActivity.class);
-//            startActivity(intent);
-//        }
+        if(authDb.getCurrentUser() != null) {
+            Intent intent = new Intent(getApplicationContext(), SelectTopicActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void loginUser(View view) {
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
+                    progressBarLogin.setVisibility(View.INVISIBLE);
                     Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_LONG).show();
                 }
             }

@@ -35,6 +35,17 @@ public class TopicActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onStart() {
+
+        super.onStart();
+
+        if(authDb.getCurrentUser() == null) {
+            finish();
+            startActivity(new Intent(this, MainActivity.class));
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
