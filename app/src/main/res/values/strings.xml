@@ -21,8 +21,9 @@
     <string name="reference_label">Resources</string>
     <string name="next_button">Next</string>
     <string name="profile_welcome_label">Welcome</string>
-    <string name="latest_progress_label">Latest Progress</string>
-    <string name="summary_progress_label">Summary Progress</string>
+    <string name="latest_progress_label">LATEST</string>
+    <string name="summary_progress_label">SUMMARY</string>
     <string name="latest_progress_topic">Topic</string>
     <string name="latest_progress_result">Result %</string>
+    <string name="take_a_quiz">Take A Quiz</string>
 </resources>

@@ -59,14 +59,6 @@
             android:background="@color/colorPrimaryLight"
             android:text="@string/topic_learning_hub_button" />
 
-        <Button
-            style="@style/textMedium"
-            android:id="@+id/viewResourcesButton"
-            android:layout_width="match_parent"
-            android:layout_height="78dp"
-            android:layout_margin="8dp"
-            android:background="@color/colorPrimaryLight"
-            android:text="@string/topic_resources_button" />
 
     </LinearLayout>
 

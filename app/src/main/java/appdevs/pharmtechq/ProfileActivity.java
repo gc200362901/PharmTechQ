@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,6 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView textViewProfileWelcomeLabel;
     private ArrayList<String> topics;
     private ArrayList<String> results;
+    private TextView textViewTakeAQuiz;
 
     private static final String TAG = "ProfileActivity";
 
@@ -63,17 +65,37 @@ public class ProfileActivity extends AppCompatActivity {
         textViewLatestTopic = findViewById(R.id.textViewLatestTopic);
         textViewLatestResult = findViewById(R.id.textViewLatestResult);
         textViewProfileWelcomeLabel = findViewById(R.id.textViewProfileWelcomeLabel);
+        textViewTakeAQuiz = findViewById(R.id.textViewTakeAQuiz);
         quizScores = new ArrayList<>();
         topics = new ArrayList<>();
         results = new ArrayList<>();
 
+        // get quizActivity results
         Intent intent = getIntent();
         latestQuizTopic = intent.getStringExtra("TOPIC");
         latestCorrectAttempts = intent.getIntExtra("CORRECT_ATTEMPTS", 0);
         latestTotalAttempts = intent.getIntExtra("TOTAL_ATTEMPTS", 0);
 
         populateWelcomeLabel();
-        populateLatestAttempt();
+
+        if(latestQuizTopic == null && latestCorrectAttempts == 0) {
+            textViewTakeAQuiz.setVisibility(View.VISIBLE);
+            textViewLatestTopic.setVisibility(View.GONE);
+            textViewLatestResult.setVisibility(View.GONE);
+
+            textViewTakeAQuiz.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getApplicationContext(), SelectTopicActivity.class));
+                }
+            });
+        }
+        else {
+            textViewTakeAQuiz.setVisibility(View.GONE);
+            textViewLatestTopic.setVisibility(View.VISIBLE);
+            textViewLatestResult.setVisibility(View.VISIBLE);
+            populateLatestAttempt();
+        }
 
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -84,8 +106,14 @@ public class ProfileActivity extends AppCompatActivity {
                     quizScores.add(quizScore);
                 }
 
-                addCurrentQuizScore();
+                // if the user completed a quiz, add the results to the database
+                // if the user traveled to the profile activity from outside the quiz,
+                // do not add anything to the database
+                if(latestQuizTopic != null) {
+                    addCurrentQuizScore();
+                }
 
+                //get the topics and results for the summary progress recylerview
                 for(QuizScore qs : quizScores) {
                     topics.add(qs.getQuizScoreTopic());
 
@@ -171,6 +199,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    //populates the textviews with the results of the last finished quiz
     private void populateLatestAttempt() {
         textViewLatestTopic.setText(latestQuizTopic);
 
