@@ -94,12 +94,13 @@ public class QuizActivity extends AppCompatActivity {
                 quizQuestionCount = 0;
                 correctAttempts = 0;
                 totalAttempts = 0;
+                //tmpQuestions used to store all questions from question bank
                 ArrayList<Question> tmpQuestions = new ArrayList<>();
                 for (DataSnapshot postSnapShot : dataSnapshot.getChildren()) {
                     Question question = postSnapShot.getValue(Question.class);
                     tmpQuestions.add(question);
                 }
-                //get questions for chosen topic from question bank
+                //get questions for chosen topic from tmpQuestions and store in quizQuestions
                 for (int i = 0; i < tmpQuestions.size(); i++) {
                     if (tmpQuestions.get(i).getQuestionTopic().equals(quizTopic)) {
                         quizQuestions.add(tmpQuestions.get(i));
@@ -120,7 +121,13 @@ public class QuizActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         quizQuestionCount += 1;
+                        //quiz has more questions
+                        //go to next question in quizQuestions arraylist
                         if(quizQuestionCount < quizQuestions.size()) {
+                            textViewExplanation.setVisibility(View.GONE);
+                            recyclerViewReferences.setVisibility(View.GONE);
+                            rootReferenceConstraint.setVisibility(View.GONE);
+                            rootExplanationConstraint.setVisibility(View.GONE);
                             //populate question
                             String currentQuestion = quizQuestions.get(quizQuestionCount).getQuestion();
                             textViewQuestion.setText(currentQuestion);
@@ -131,6 +138,8 @@ public class QuizActivity extends AppCompatActivity {
                             ArrayList<String> references = new ArrayList<>(quizQuestions.get(quizQuestionCount).getReferences());
                             initRecyclerViewReferences(references);
                         }
+                        //quiz is finished
+                        // go to profile
                         else {
                             Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                             intent.putExtra("TOPIC", quizTopic);

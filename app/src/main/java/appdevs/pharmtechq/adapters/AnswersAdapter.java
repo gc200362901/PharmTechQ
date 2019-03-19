@@ -30,7 +30,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
     private RecyclerView recyclerViewReferences;
     private ProgressBar progressBarQuiz;
     private Button buttonNext;
-    final int PROGRESS_BAR_INCREMENT = (int) Math.ceil(100.0 / QuizActivity.quizQuestions.size());
+    private final int PROGRESS_BAR_INCREMENT = (int) Math.ceil(100.0 / QuizActivity.quizQuestions.size());
 
     public AnswersAdapter(Context context, ArrayList<String> answers,
                           ConstraintLayout rootExplanationConstraint,
@@ -84,6 +84,13 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
                         //makes the explanation and reference labels visible
                         rootExplanationConstraint.setVisibility(View.VISIBLE);
                         rootReferenceConstraint.setVisibility(View.VISIBLE);
+
+                        //onclick listener for the explanation label
+                        //displays explanation for question if label is clicked
+                        //on click listen for resource label
+                        // displays resources for question if label is clicked
+                        explanationAndReferencesListeners();
+
                     //answer selected was wrong and changes background to red
                     //increases totalAttempts counter by 1
                     //enables next button
@@ -100,40 +107,9 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
 
                         //onclick listener for the explanation label
                         //displays explanation for question if label is clicked
-                        rootExplanationConstraint.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String currentExplanation = QuizActivity.quizQuestions
-                                        .get(QuizActivity.quizQuestionCount).getExplanation();
-                                textViewExplanation.setText(currentExplanation);
-
-                                if(explanationShow) {
-                                    textViewExplanation.setVisibility(View.VISIBLE);
-                                    explanationShow = false;
-                                }
-                                else {
-                                    textViewExplanation.setVisibility(View.GONE);
-                                    explanationShow = true;
-                                }
-                            }
-                        });
-
-                        //onclick listener for the resources label
-                        //displays references for question if the label is clicked
-                        rootReferenceConstraint.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                if(referencesShow) {
-                                    recyclerViewReferences.setVisibility(View.VISIBLE);
-                                    referencesShow = false;
-                                }
-                                else {
-                                    recyclerViewReferences.setVisibility(View.GONE);
-                                    referencesShow = true;
-                                }
-                            }
-                        });
+                        //on click listen for resource label
+                        // displays resources for question if label is clicked
+                        explanationAndReferencesListeners();
                     }
                 }
             }
@@ -155,6 +131,45 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
             textViewAnswerItem = itemView.findViewById(R.id.textViewAnswerItem);
             rootAnswerItem = itemView.findViewById(R.id.rootAnswerItem);
         }
+    }
+
+    private void explanationAndReferencesListeners() {
+        //onclick listener for the explanation label
+        //displays explanation for question if label is clicked
+        rootExplanationConstraint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String currentExplanation = QuizActivity.quizQuestions
+                        .get(QuizActivity.quizQuestionCount).getExplanation();
+                textViewExplanation.setText(currentExplanation);
+
+                if(explanationShow) {
+                    textViewExplanation.setVisibility(View.VISIBLE);
+                    explanationShow = false;
+                }
+                else {
+                    textViewExplanation.setVisibility(View.GONE);
+                    explanationShow = true;
+                }
+            }
+        });
+
+        //onclick listener for the resources label
+        //displays references for question if the label is clicked
+        rootReferenceConstraint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(referencesShow) {
+                    recyclerViewReferences.setVisibility(View.VISIBLE);
+                    referencesShow = false;
+                }
+                else {
+                    recyclerViewReferences.setVisibility(View.GONE);
+                    referencesShow = true;
+                }
+            }
+        });
     }
 
 }
