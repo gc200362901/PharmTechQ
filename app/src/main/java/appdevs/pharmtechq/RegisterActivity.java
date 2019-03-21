@@ -60,6 +60,9 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter an email", Toast.LENGTH_LONG).show();
             return;
         }
+        if(TextUtils.isEmpty(name)) {
+            Toast.makeText(this,"Please enter a display name", Toast.LENGTH_LONG).show();
+        }
         if(TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Please enter a password", Toast.LENGTH_LONG).show();
             return;
@@ -76,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
-                    userProfile();
+                    userProfile(name);
                 }
                 else {
                     progressBarRegister.setVisibility(View.INVISIBLE);
@@ -86,11 +89,12 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void userProfile() {
+    // adds a displayname to the user profile
+    private void userProfile(String name) {
         FirebaseUser user = authDb.getCurrentUser();
         if(user != null) {
             UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(editTextName.getText().toString().trim()).build();
+                    .setDisplayName(name).build();
 
             user.updateProfile(profileChangeRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

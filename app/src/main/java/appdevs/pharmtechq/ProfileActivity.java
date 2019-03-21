@@ -94,8 +94,10 @@ public class ProfileActivity extends AppCompatActivity {
             textViewTakeAQuiz.setVisibility(View.GONE);
             textViewLatestTopic.setVisibility(View.VISIBLE);
             textViewLatestResult.setVisibility(View.VISIBLE);
-            populateLatestAttempt();
+
         }
+
+        populateLatestAttempt();
 
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

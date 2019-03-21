@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -27,6 +30,7 @@ import appdevs.pharmtechq.models.Question;
 
 public class QuizActivity extends AppCompatActivity {
 
+    private Toolbar toolBar;
     private FirebaseAuth authDb;
     private DatabaseReference db;
     public static ArrayList<Question> quizQuestions;
@@ -50,6 +54,9 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         quizQuestions = new ArrayList<>();
+        //menu
+        toolBar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolBar);
         //database
         authDb = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance().getReference("questions");
@@ -80,6 +87,29 @@ public class QuizActivity extends AppCompatActivity {
         if(authDb.getCurrentUser() == null) {
             finish();
             startActivity(new Intent(this, MainActivity.class));
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_select_topics:
+                startActivity(new Intent(getApplicationContext(), SelectTopicActivity.class));
+                return true;
+            case R.id.action_profile:
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                return true;
+            case R.id.action_logout:
+                authDb.signOut();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

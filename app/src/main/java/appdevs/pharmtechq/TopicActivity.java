@@ -73,4 +73,10 @@ public class TopicActivity extends AppCompatActivity {
         intent.putExtra("TOPIC", topic);
         startActivity(intent);
     }
+
+    public void learningHub(View view) {
+        Intent intent = new Intent(getApplicationContext(), LearningHubActivity.class);
+        intent.putExtra("TOPIC", topic);
+        startActivity(intent);
+    }
 }

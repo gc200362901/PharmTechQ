@@ -33,7 +33,6 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         return viewHolder;
     }
 
-    //gets called every time a new topic item is added to list
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
 

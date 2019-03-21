@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TopicActivity">
+    tools:context=".LearningHubActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolBar"
@@ -20,47 +20,23 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolBar">
 
         <TextView
             style="@style/textTitlePrimary"
-            android:id="@+id/textViewTopic"
+            android:id="@+id/textViewLearningHubTopic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/chosen_topic"
-            android:textSize="24sp" />
+            android:padding="16dp" />
 
-        <Button
-            style="@style/textMedium"
-            android:id="@+id/quizButton"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewLearningHub"
             android:layout_width="match_parent"
-            android:layout_height="78dp"
-            android:layout_margin="8dp"
-            android:background="@color/colorPrimaryLight"
-            android:text="@string/topic_take_quiz_button"
-            android:onClick="quizButton" />
-
-        <Button
-            style="@style/textMedium"
-            android:id="@+id/learningHubButton"
-            android:layout_width="match_parent"
-            android:layout_height="78dp"
-            android:layout_margin="8dp"
-            android:background="@color/colorPrimaryLight"
-            android:text="@string/topic_learning_hub_button"
-            android:onClick="learningHub"/>
-
-
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

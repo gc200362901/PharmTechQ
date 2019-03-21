@@ -40,7 +40,11 @@ public class QuizScoresAdapter extends RecyclerView.Adapter<QuizScoresAdapter.Vi
     public void onBindViewHolder(@NonNull QuizScoresAdapter.ViewHolder viewHolder, int i) {
         viewHolder.textViewTopic.setText(quizTopics.get(i));
 
+        //quizResults are in a string
+        //uses split to get int left of decimal
         String[] tmpResults = quizResults.get(i).split(Pattern.quote("."));
+
+        //compares tmpResults[0] from split string to determine textview color
         if(Integer.parseInt(tmpResults[0]) < 49) {
             viewHolder.textViewResult.setTextColor(context.getResources().getColor(R.color.under_50_percent));
         }
