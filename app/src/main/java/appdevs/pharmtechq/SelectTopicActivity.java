@@ -76,10 +76,9 @@ public class SelectTopicActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Connect to Firebase database to question.topic. Add topics to hashset to remove duplicates
-     * and then convert hashset to arraylist to be used in recyclerview
-     */
+
+    //Connect to Firebase database to question.topic. Add topics to hashset to remove duplicates
+    //and then convert hashset to arraylist to be used in recyclerview
     private void populateTopics() {
         
         db = FirebaseDatabase.getInstance().getReference("questions");
@@ -106,12 +105,11 @@ public class SelectTopicActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Get reference to recyclerview. Instantiate the adapter for the recyclerview with the
-     * context and topics arraylist arguments. Set the adapter for the recyclerview. Set the
-     * layout manager for the recyclerview to linear layout manager so recyclerview loads vertical
-     * list
-     */
+
+     //Get reference to recyclerview. Instantiate the adapter for the recyclerview with the
+     //context and topics arraylist arguments. Set the adapter for the recyclerview. Set the
+     //layout manager for the recyclerview to linear layout manager so recyclerview loads vertical
+     // list
     private void initRecyclerView() {
         
         RecyclerView recyclerView = findViewById(R.id.recyclerViewTopics);

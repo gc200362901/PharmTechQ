@@ -33,7 +33,6 @@ public class LearningHubActivity extends AppCompatActivity {
     private FirebaseAuth authDb;
     private DatabaseReference db;
     private TextView textViewLearningHubTopic;
-    private RecyclerView recyclerViewLearningHubContentRef;
     private ArrayList<LearningHubEntry> learningHubEntries;
     private String quizTopic;
 
