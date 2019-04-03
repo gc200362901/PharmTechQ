@@ -18,7 +18,7 @@ public class LearningHubAdapter extends RecyclerView.Adapter<LearningHubAdapter.
     
     private Context context;
     private ArrayList<LearningHubEntry> learningHubEntries;
-    boolean displayHeadingContents;
+    private boolean displayHeadingContents = true;
     
     public LearningHubAdapter(Context context, ArrayList<LearningHubEntry> learningHubEntries) {
         this.context = context;
