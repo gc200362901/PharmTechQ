@@ -12,8 +12,10 @@
   <li>A learning hub with extra information about each topic</li>
   <li>A profile page, which tracks the latest quiz topic result and the average results for each quiz topic taken previosuly</li>
   </ul>
-  ![](images/quiz.PNG)
-  ![](images/profile.PNG)
+  ![](images/screenshot1.PNG)
+  ![](images/screenshot2.PNG)
+  ![](images/screenshot3.PNG)
+  ![](images/screenshot4.PNG)
   <h3>Updates v1.2</h3>
   <ul>
     <li>Fixed bug in Learning Hub where headings had to be clicked twice to show contents</li>
