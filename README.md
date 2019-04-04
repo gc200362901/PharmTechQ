@@ -12,14 +12,12 @@
   <li>A learning hub with extra information about each topic</li>
   <li>A profile page, which tracks the latest quiz topic result and the average results for each quiz topic taken previosuly</li>
   </ul>
-  ![](images/screenshot1.PNG)
-  ![](images/screenshot2.PNG)
-  ![](images/screenshot3.PNG)
-  ![](images/screenshot4.PNG)
-  <img src="images/screenshot1" width="40%">
-  <img src="images/screenshot2" width="40%">
-  <img src="images/screenshot3" width="40%">
-  <img src="images/screenshot4" width="40%">
+  
+  ![](images/screenshot1.png)
+  ![](images/screenshot2.png)
+  
+  ![](images/screenshot3.png)
+  ![](images/screenshot4.png)
   
   <h3>Updates v1.2</h3>
   <ul>
