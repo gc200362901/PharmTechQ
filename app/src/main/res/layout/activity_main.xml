@@ -59,15 +59,14 @@
             android:text="@string/login_button"
             android:background="@color/colorPrimaryLight"/>
 
-        <ImageButton
-            android:id="@+id/imageButtonGoogle"
+        <com.google.android.gms.common.SignInButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/google_signin" />
+            android:layout_marginStart="64dp"
+            android:layout_marginEnd="64dp"
+            android:id="@+id/googleSignInButton">
+
+        </com.google.android.gms.common.SignInButton>
 
         <TextView
             android:id="@+id/textViewNotRegistered"
