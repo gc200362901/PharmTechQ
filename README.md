@@ -20,6 +20,7 @@
   <img src="images/screenshot2" width="40%">
   <img src="images/screenshot3" width="40%">
   <img src="images/screenshot4" width="40%">
+  
   <h3>Updates v1.2</h3>
   <ul>
     <li>Fixed bug in Learning Hub where headings had to be clicked twice to show contents</li>
