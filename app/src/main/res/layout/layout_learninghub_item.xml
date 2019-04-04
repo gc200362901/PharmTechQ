@@ -17,10 +17,11 @@
 
         <TextView
             style="@style/textMedium"
-            android:background="@color/colorPrimaryLight"
+            android:background="@drawable/layout_border"
             android:id="@+id/textViewLearningHubHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="8dp"
             android:layout_marginBottom="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp" />
@@ -28,19 +29,20 @@
         <TextView
             style="@style/textSmall"
             android:id="@+id/textViewLearningHubContent"
+            android:justificationMode="inter_word"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp" />
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp" />
 
         <TextView
             android:id="@+id/textViewLearningHubReference"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="16dp" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
