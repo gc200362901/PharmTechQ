@@ -13,11 +13,11 @@
   <li>A profile page, which tracks the latest quiz topic result and the average results for each quiz topic taken previosuly</li>
   </ul>
   
-  ![](images/screenshot1.png)
-  ![](images/screenshot2.png)
+  ![](images/ss1_rs.png)
+  ![](images/ss2_rs.png)
   
-  ![](images/screenshot3.png)
-  ![](images/screenshot4.png)
+  ![](images/ss3_rs.png)
+  ![](images/ss4_rs.png)
   
   <h3>Updates v1.2</h3>
   <ul>
