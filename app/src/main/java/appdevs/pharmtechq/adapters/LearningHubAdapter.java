@@ -77,7 +77,7 @@ public class LearningHubAdapter extends RecyclerView.Adapter<LearningHubAdapter.
             viewHolder.textViewLearningHubReferenceLink.setText(m.group(0));
         }
         else {
-            final String error = "No link found";
+            final String error = "No link available";
             viewHolder.textViewLearningHubReferenceLink.setText(error);
         }
 

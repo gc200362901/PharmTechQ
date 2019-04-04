@@ -42,7 +42,6 @@ public class QuizActivity extends AppCompatActivity {
     private ConstraintLayout rootExplanationConstraint;
     private ConstraintLayout rootReferenceConstraint;
     private TextView textViewExplanation;
-    private TextView textViewRefInfo;
     private RecyclerView recyclerViewReferences;
     private Button buttonNext;
     private ProgressBar progressBarQuiz;
@@ -65,7 +64,6 @@ public class QuizActivity extends AppCompatActivity {
         rootExplanationConstraint = findViewById(R.id.rootExplanationConstraint);
         rootReferenceConstraint = findViewById(R.id.rootReferencesConstraint);
         textViewExplanation = findViewById(R.id.textViewExplanation);
-        textViewRefInfo = findViewById(R.id.textViewRefInfo);
         recyclerViewReferences = findViewById(R.id.recyclerViewReferences);
         buttonNext = findViewById(R.id.buttonNext);
         progressBarQuiz = findViewById(R.id.progressBarQuiz);
