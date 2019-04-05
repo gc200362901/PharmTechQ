@@ -11,9 +11,24 @@
   <li>A progress bar to give an estimation to the amount of questions left during the quiz</li>
   <li>A learning hub with extra information about each topic</li>
   <li>A profile page, which tracks the latest quiz topic result and the average results for each quiz topic taken previosuly</li>
+  </ul>
   
-  ![](images/quiz.PNG)
-  ![](images/profile.PNG)
+  ![](images/ss1_rs.png)
+  ![](images/ss2_rs.png)
+  
+  ![](images/ss3_rs.png)
+  ![](images/ss4_rs.png)
+  
+  <h3>Updates v1.2</h3>
+  <ul>
+    <li>Fixed bug in Learning Hub where headings had to be clicked twice to show contents</li>
+    <li>Adjusted Learning Hub headings so they would fit on one line for smaller divices</li>
+    <li>Normalized buttons, justified content text and increased margins to 16dp in Learning Hub to match other activities</li>
+    <li>Fixed login and register activity views getting cut off on smaller screens</li>
+     <li>Changed to NestedScrollView to improve nested recyclerviews performance</li>
+     <li>Took APA references and seperated them into reference description and reference link, if available, using a regex to make the link clickable so users can access the reference material in a browser</li>
+     <li>Added Google Sign-In capability</li>
+  </ul>
   <h3>Technology</h3>
   <ul>
     <li>Java 8</li>
