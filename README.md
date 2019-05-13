@@ -1,6 +1,7 @@
 # PharmTechQ
 ![](images/logo.PNG)
 <p>An application to help pharmacy tech students study for their certification</p>
+<p>*Google API key removed<p>
 
 <h2>Application Features</h2>
 <ul>
